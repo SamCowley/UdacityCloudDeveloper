@@ -23,12 +23,10 @@ async function comparePasswords(plainTextPassword: string, hash: string): Promis
 }
 
 function generateJWT(user: User): string {
-    return jwt.sign(user, config.jwt.secret);
+    return jwt.sign(user.toJSON(), config.jwt.secret);
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
-    console.warn("auth.router not yet implemented, you'll cover this in lesson 5")
-    return next();
     if (!req.headers || !req.headers.authorization){
         return res.status(401).send({ message: 'No authorization headers.' });
     }
